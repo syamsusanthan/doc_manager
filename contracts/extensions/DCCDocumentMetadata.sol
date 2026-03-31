@@ -9,8 +9,8 @@ abstract contract DCCDocumentMetadata is DCCDocumentManager {
 
     function setMetadata(
         bytes32 name,
-        string calldata key,
-        string calldata value
+        string memory key,
+        string memory value
     ) external onlyOwner {
         require(_documents[name].exists, "Not found");
         _metadata[name][key] = value;
