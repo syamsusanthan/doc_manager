@@ -31,7 +31,7 @@ abstract contract DCCDocumentManager is IDocumentManager, Ownable {
 
     function setDocument(
         bytes32 name,
-        string calldata uri,
+        string memory uri,
         bytes32 documentHash
     ) public virtual override onlyOwner {
         require(bytes(uri).length > 0, "Invalid URI");
