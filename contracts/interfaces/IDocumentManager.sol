@@ -8,7 +8,7 @@ interface IDocumentManager {
 
     function setDocument(
         bytes32 name,
-        string calldata uri,
+        string memory uri
         bytes32 documentHash
     ) external;
 
