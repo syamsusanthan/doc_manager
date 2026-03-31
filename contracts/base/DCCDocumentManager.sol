@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import "../interfaces/IDocumentManager.sol";
-import "../access/Ownable.sol";
+import "https://raw.githubusercontent.com/syamsusanthan/doc_manager/main/contracts/interfaces/IDocumentManager.sol";
+import "https://raw.githubusercontent.com/syamsusanthan/doc_manager/main/contracts/access/Ownable.sol";
 
 abstract contract DCCDocumentManager is IDocumentManager, Ownable {
 
