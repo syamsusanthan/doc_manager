@@ -11,13 +11,13 @@ abstract contract DCCDocumentMetadata is DCCDocumentManager {
         bytes32 name,
         string memory key,
         string memory value
-    ) external onlyOwner {
+    ) public onlyOwner {
         require(_documents[name].exists, "Not found");
         _metadata[name][key] = value;
     }
 
     function getMetadata(bytes32 name, string calldata key)
-        external
+        public
         view
         returns (string memory)
     {
