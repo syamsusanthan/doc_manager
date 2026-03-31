@@ -16,7 +16,7 @@ abstract contract DCCDocumentMetadata is DCCDocumentManager {
         _metadata[name][key] = value;
     }
 
-    function getMetadata(bytes32 name, string calldata key)
+    function getMetadata(bytes32 name, string memory key)
         public
         view
         returns (string memory)
