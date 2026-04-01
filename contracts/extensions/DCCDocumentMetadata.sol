@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import "../base/DCCDocumentManager.sol";
+import "https://raw.githubusercontent.com/syamsusanthan/doc_manager/main/contracts/base/DCCDocumentManager.sol";
 
 abstract contract DCCDocumentMetadata is DCCDocumentManager {
 
@@ -9,15 +9,15 @@ abstract contract DCCDocumentMetadata is DCCDocumentManager {
 
     function setMetadata(
         bytes32 name,
-        string calldata key,
-        string calldata value
-    ) external onlyOwner {
+        string memory key,
+        string memory value
+    ) public onlyOwner {
         require(_documents[name].exists, "Not found");
         _metadata[name][key] = value;
     }
 
-    function getMetadata(bytes32 name, string calldata key)
-        external
+    function getMetadata(bytes32 name, string memory key)
+        public
         view
         returns (string memory)
     {

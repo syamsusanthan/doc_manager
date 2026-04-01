@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import "../interfaces/IDocumentManager.sol";
-import "../access/Ownable.sol";
+import "https://raw.githubusercontent.com/syamsusanthan/doc_manager/main/contracts/interfaces/IDocumentManager.sol";
+import "https://raw.githubusercontent.com/syamsusanthan/doc_manager/main/contracts/access/Ownable.sol";
 
 abstract contract DCCDocumentManager is IDocumentManager, Ownable {
 
@@ -31,7 +31,7 @@ abstract contract DCCDocumentManager is IDocumentManager, Ownable {
 
     function setDocument(
         bytes32 name,
-        string calldata uri,
+        string memory uri,
         bytes32 documentHash
     ) public virtual override onlyOwner {
         require(bytes(uri).length > 0, "Invalid URI");
