@@ -1,7 +1,7 @@
 {
   "name": "@syamsusanthan/doc-manager",
   "version": "1.0.0",
-  "description": "Document management library for Solidity (DCC - Document Control Contract), similar to OpenZeppelin standards",
+  "description": "Document management library for Solidity (DCC - Document Control Contract). Easy to use like OpenZeppelin.",
   "repository": {
     "type": "git",
     "url": "https://github.com/syamsusanthan/doc_manager.git"
@@ -14,9 +14,10 @@
     "ethereum",
     "smart-contracts",
     "document-management",
-    "dcc"
+    "dcc",
+    "metadata"
   ],
-  "author": "Your Name",
+  "author": "syamsusanthan",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/syamsusanthan/doc_manager/issues"

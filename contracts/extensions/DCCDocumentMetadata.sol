@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import "https://raw.githubusercontent.com/syamsusanthan/doc_manager/main/contracts/base/DCCDocumentManager.sol";
-
+import "../base/DCCDocumentManager.sol";
 abstract contract DCCDocumentMetadata is DCCDocumentManager {
 
     mapping(bytes32 => mapping(string => string)) internal _metadata;
