@@ -1,12 +1,25 @@
 {
-  "name": "doc_manager",
+  "name": "@syamsusanthan/doc-manager",
   "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "description": "Document management library for Solidity (DCC - Document Control Contract), similar to OpenZeppelin standards",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/syamsusanthan/doc_manager.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": ""
+  "files": [
+    "contracts/**/*.sol"
+  ],
+  "keywords": [
+    "solidity",
+    "ethereum",
+    "smart-contracts",
+    "document-management",
+    "dcc"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/syamsusanthan/doc_manager/issues"
+  },
+  "homepage": "https://github.com/syamsusanthan/doc_manager#readme"
 }
