@@ -2,6 +2,7 @@
 pragma solidity ^0.8.20;
 
 import "../base/DCCDocumentManager.sol";
+
 abstract contract DCCDocumentMetadata is DCCDocumentManager {
 
     mapping(bytes32 => mapping(string => string)) internal _metadata;
@@ -11,7 +12,7 @@ abstract contract DCCDocumentMetadata is DCCDocumentManager {
         string memory key,
         string memory value
     ) public onlyOwner {
-        require(_documents[name].exists, "Not found");
+        require(_documents[name].exists, "Document not found");
         _metadata[name][key] = value;
     }
 

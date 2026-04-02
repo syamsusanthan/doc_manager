@@ -2,14 +2,22 @@
 pragma solidity ^0.8.20;
 
 interface IDocumentManager {
+    event DocumentUpdated(
+        bytes32 indexed name,
+        string uri,
+        bytes32 documentHash,
+        uint8 docType,
+        uint256 validUntil
+    );
 
-    event DocumentUpdated(bytes32 indexed name, string uri, bytes32 documentHash);
     event DocumentRemoved(bytes32 indexed name);
 
     function setDocument(
         bytes32 name,
         string memory uri,
-        bytes32 documentHash
+        bytes32 documentHash,
+        uint8 docType,          // 0 = LEGAL, 1 = FINANCIAL, etc. or custom
+        uint256 validUntil      // 0 = lifetime, otherwise timestamp
     ) external;
 
     function getDocument(bytes32 name)

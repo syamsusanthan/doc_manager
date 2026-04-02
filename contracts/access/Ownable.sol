@@ -9,7 +9,13 @@ abstract contract Ownable {
         _;
     }
 
-    constructor() {
-        owner = msg.sender;
+    /**
+     * @dev Constructor allows setting a custom owner.
+     * If `initialOwner` is address(0), then msg.sender (deployer) becomes the owner.
+     */
+    constructor(address initialOwner) {
+        address _owner = (initialOwner == address(0)) ? msg.sender : initialOwner;
+        require(_owner != address(0), "Owner cannot be zero address");
+        owner = _owner;
     }
 }
