@@ -5,15 +5,8 @@ import "../interfaces/IDocumentManager.sol";
 import "../access/Ownable.sol";
 
 abstract contract DCCDocumentManager is IDocumentManager, Ownable {
-    struct DocumentVersion {
-        string uri;
-        bytes32 hash;
-        uint256 timestamp;
-        uint256 validUntil;
-    }
-
     struct Document {
-        uint8 docType; // Changed from enum to uint8 for flexibility
+        uint8 docType;
         DocumentVersion[] versions;
         bool exists;
     }
@@ -22,8 +15,8 @@ abstract contract DCCDocumentManager is IDocumentManager, Ownable {
     bytes32[] internal _documentNames;
 
     constructor(address initialOwner) Ownable(initialOwner) {
-        // You can add more initialization here later if needed
     }
+
     function setDocument(
         bytes32 name,
         string memory uri,
@@ -31,15 +24,18 @@ abstract contract DCCDocumentManager is IDocumentManager, Ownable {
         uint8 docType,
         uint256 validUntil
     ) public virtual override onlyOwner {
+        require(name != bytes32(0), "Invalid name");
         require(bytes(uri).length > 0, "Invalid URI");
+        require(documentHash != bytes32(0), "Invalid hash");
+        require(validUntil == 0 || validUntil > block.timestamp, "Invalid expiry");
 
         if (!_documents[name].exists) {
             _documents[name].exists = true;
-            _documents[name].docType = docType;
             _documentNames.push(name);
         }
 
-        // If validUntil is 0, treat as lifetime (no expiry)
+        _documents[name].docType = docType;
+
         uint256 expiry = (validUntil == 0) ? type(uint256).max : validUntil;
 
         _documents[name].versions.push(
@@ -65,11 +61,26 @@ abstract contract DCCDocumentManager is IDocumentManager, Ownable {
         return (v.uri, v.hash, v.timestamp);
     }
 
+    function getDocumentDetails(
+        bytes32 name
+    ) public view override returns (DocumentDetails memory) {
+        DocumentVersion memory v = _latestVersion(name);
+
+        return DocumentDetails({
+            uri: v.uri,
+            hash: v.hash,
+            timestamp: v.timestamp,
+            validUntil: v.validUntil,
+            docType: _documents[name].docType,
+            expired: _isExpired(v.validUntil)
+        });
+    }
+
     function getAllDocuments() public view override returns (bytes32[] memory) {
         return _documentNames;
     }
 
-    function removeDocument(bytes32 name) public override onlyOwner {
+    function removeDocument(bytes32 name) public virtual override onlyOwner {
         require(_documents[name].exists, "Document not found");
 
         delete _documents[name];
@@ -88,14 +99,49 @@ abstract contract DCCDocumentManager is IDocumentManager, Ownable {
 
     function getDocumentVersions(
         bytes32 name
-    ) public view returns (DocumentVersion[] memory) {
+    ) public view override returns (DocumentVersion[] memory) {
         require(_documents[name].exists, "Document not found");
         return _documents[name].versions;
     }
 
-    // Helper function to get document type
-    function getDocumentType(bytes32 name) public view returns (uint8) {
+    function getDocumentVersion(
+        bytes32 name,
+        uint256 index
+    ) public view override returns (DocumentVersion memory) {
+        require(_documents[name].exists, "Document not found");
+        require(index < _documents[name].versions.length, "Invalid version");
+        return _documents[name].versions[index];
+    }
+
+    function getDocumentVersionCount(
+        bytes32 name
+    ) public view override returns (uint256) {
+        require(_documents[name].exists, "Document not found");
+        return _documents[name].versions.length;
+    }
+
+    function getDocumentType(bytes32 name) public view override returns (uint8) {
         require(_documents[name].exists, "Document not found");
         return _documents[name].docType;
+    }
+
+    function isDocumentExpired(bytes32 name) public view override returns (bool) {
+        DocumentVersion memory v = _latestVersion(name);
+        return _isExpired(v.validUntil);
+    }
+
+    function documentExists(bytes32 name) public view override returns (bool) {
+        return _documents[name].exists;
+    }
+
+    function _latestVersion(bytes32 name) internal view returns (DocumentVersion memory) {
+        require(_documents[name].exists, "Document not found");
+
+        uint256 len = _documents[name].versions.length;
+        return _documents[name].versions[len - 1];
+    }
+
+    function _isExpired(uint256 validUntil) internal view returns (bool) {
+        return validUntil != type(uint256).max && validUntil < block.timestamp;
     }
 }

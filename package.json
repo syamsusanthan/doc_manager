@@ -2,12 +2,22 @@
   "name": "@syamsusanthan/doc-manager",
   "version": "1.0.0",
   "description": "Document management library for Solidity (DCC - Document Control Contract). Easy to use like OpenZeppelin.",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "clean": "hardhat clean"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/syamsusanthan/doc_manager.git"
   },
   "files": [
-    "contracts/**/*.sol"
+    "contracts/access/**/*.sol",
+    "contracts/base/**/*.sol",
+    "contracts/extensions/**/*.sol",
+    "contracts/interfaces/**/*.sol",
+    "README.md",
+    "LICENSE"
   ],
   "keywords": [
     "solidity",
@@ -22,5 +32,9 @@
   "bugs": {
     "url": "https://github.com/syamsusanthan/doc_manager/issues"
   },
-  "homepage": "https://github.com/syamsusanthan/doc_manager#readme"
+  "homepage": "https://github.com/syamsusanthan/doc_manager#readme",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "hardhat": "^2.22.0"
+  }
 }
